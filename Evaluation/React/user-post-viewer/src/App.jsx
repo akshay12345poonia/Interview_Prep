@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState, useEffect, useCallback } from "react";
+import UserDropdown from "./components/UserDropdown";
+import PostList from "./components/PostList";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [selectedUserId, setSelectedUserId] = useState("");
+  const [selectedUserName, setSelecttedUserName] = useState("");
+  const {data: users} = useFetch();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+  useEffect(() => {
+    const controller = new AbortController();
+    const fetchUsers = async () => {
+      try {
+        const response = await fetch("https://jsonplaceholder.typicode.com/users", {
+          signal: controller.signal
+        });
+        const data = await response.json();
+      }
+      catch (error){
+        if (error.name !== "AbortError") {
+          console.error("Error fetching users:", error);
+        }
+      }
+    };
+    fetchUsers();
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  const handleUserSelect = useCallback((userId) => {
+    setSelectedUserId(userId);
+    if(users && userId){
+      const user = users.find(u => u.id.toString() === userId);
+      setSelecttedUserName(user ? user.name : "");
+    } else {
+      setSelecttedUserName("");
+    }
+  }, [users]);
 }
 
-export default App
+export default App;
