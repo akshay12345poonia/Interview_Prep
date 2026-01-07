@@ -27,7 +27,8 @@ async function fetchPostWithComments(){
                 commentCount: commentData.count,
                 firstCommentEmail: commentData.firstCommentEmail || null
             }
-        });
+        })
+        .filter(post => post.commentCount > 0).sort((a, b) => b.commentCount - a.commentCount).slice(0, 5);
         return mergedData;
     }
     catch (error) {
