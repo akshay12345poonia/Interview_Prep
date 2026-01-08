@@ -4,7 +4,7 @@
 A database is an organized collection of data that allows efficient storage, retrieval, updating, and management of information. Databases are broadly categorized into relational databases, document databases, key-value stores, column-oriented databases, and graph databases, each designed to handle different data models and use cases.
 
 ## What is the difference between SQL and NoSQL databases?
-SQL databases are relational and use structured schemas with predefined tables and relationships, relying on SQL for querying. NoSQL databases are non-relational and use flexible or schema-less data models, making them more suitable for handling large volumes of unstructured or semi-structured data and for scaling horizontally.
+SQL databases are relational and use structured schemas with predefined tables and relationships, relying on SQL for querying. NoSQL databases are non-relational and use flexible or schema-less data models, making them more suitable for handling lcd arge volumes of unstructured or semi-structured data and for scaling horizontally.
 
 ## When would you choose SQL over NoSQL and vice versa?
 SQL databases are preferred when data consistency, complex relationships, and transactions are critical. NoSQL databases are chosen when scalability, flexibility, and high performance with large datasets are more important, especially in distributed systems and rapidly evolving applications.
