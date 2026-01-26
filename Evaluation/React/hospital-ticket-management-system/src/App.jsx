@@ -75,12 +75,64 @@ useEffect(() => {
   }
 
   const resetSystem = () => {
-    localStorage.clear();
-  }
- 
-  return (
+localStorage.clear();
+    setTimer(SESSION_DURATION);
+    setCurrentIndex(0);
+    setPatientStatus({});
+    setIsSessionActive(true);
+    window.location.reload();
+  };
 
-  )
+
+
+  return (
+    <div className="min-h-screen bg-gray-100 p-4 font-sans text-gray-800 flex flex-col items-center">
+      
+      <div className="w-full max-w-3xl">
+        <h1 className="text-2xl font-bold text-center mb-6 text-gray-700">
+          Hospital OPD Ticket Manager
+        </h1>
+
+        <Header 
+          timer={timer} 
+          treated={treatedCount} 
+          notTreated={notTreatedCount} 
+          pending={pendingCount} 
+        />
+
+        <div className="mb-4 text-center">
+          <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+            Patient {currentIndex + 1} of {initialPatients.length}
+          </span>
+        </div>
+
+        <TicketCard 
+          patient={initialPatients[currentIndex]} 
+          status={patientStatus[initialPatients[currentIndex].id]} 
+        />
+
+        <Controls 
+          onNext={handleNext}
+          onPrev={handlePrev}
+          onStatusUpdate={handleStatusUpdate}
+          isFirst={currentIndex === 0}
+          isLast={currentIndex === initialPatients.length - 1}
+          currentStatus={patientStatus[initialPatients[currentIndex].id]}
+          isSessionActive={isSessionActive}
+        />
+      </div>
+
+      {!isSessionActive && (
+        <Summary 
+          total={initialPatients.length}
+          treated={treatedCount}
+          notTreated={notTreatedCount}
+          pending={pendingCount}
+          onReset={resetSystem}
+        />
+      )}
+    </div>
+  );
 }
 
 export default App
